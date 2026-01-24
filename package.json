@@ -1,24 +1,38 @@
 {
   "name": "starter-kit",
+  "version": "0.0.0",
   "private": true,
+  "workspaces": [
+    "apps/**/*",
+    "packages/**/*"
+  ],
+  "type": "module",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt --check",
+    "format:fix": "oxfmt",
+    "check-types": "turbo run check-types",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "oxfmt": "^0.26.0",
+    "oxlint": "^1.41.0",
     "turbo": "^2.7.5",
     "typescript": "5.9.2"
   },
-  "engines": {
-    "node": ">=18"
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,cjs,json,md}": [
+      "bun format:fix",
+      "bun lint:fix"
+    ]
   },
-  "packageManager": "bun@1.2.22",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "engines": {
+    "bun": ">=1.3.0"
+  },
+  "packageManager": "bun@1.3.6"
 }

@@ -1,0 +1,33 @@
+name: Dependabot
+
+on:
+  pull_request:
+    # Trigger on any PR, but we filter for Dependabot below
+    branches: ["main"]
+
+permissions:
+  contents: write # Required to merge
+  pull-requests: write # Required to approve/comment
+
+jobs:
+  auto-merge:
+    name: Auto-Merge
+    runs-on: ubuntu-latest
+    # Security: Only run this job if the PR comes from Dependabot
+    if: ${{ github.actor == 'dependabot[bot]' }}
+
+    steps:
+      - name: Dependabot Metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Enable Auto-Merge
+        # Only merge if the update is not a major update
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
+
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

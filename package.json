@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "apps/**/*",
-    "packages/**/*"
+    "apps/frontend/*",
+    "apps/backend/*",
+    "packages/frontend/*",
+    "packages/backend/*",
+    "packages/shared/*"
   ],
   "type": "module",
   "scripts": {

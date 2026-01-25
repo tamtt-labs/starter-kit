@@ -1,0 +1,35 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "08:00"
+      timezone: "Asia/Ho_Chi_Minh"
+
+    # Limit open PRs to prevent flooding (e.g., if you have 10 major updates)
+    open-pull-requests-limit: 10
+
+    labels:
+      - "dependencies"
+
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+    versioning-strategy: "increase-if-necessary"
+
+    groups:
+      # GROUP 1: Safe Updates (Minor & Patch)
+      # This creates ONE single PR like "chore(deps): update dependencies (minor/patch)"
+      safe-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+      # GROUP 2: Risky Updates (Major)
+      # Since we already grouped the minor/patch updates
+      # Major updates will bypass and create separate, individual PRs.

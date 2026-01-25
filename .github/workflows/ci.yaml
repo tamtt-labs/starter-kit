@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Abort previous runs of this workflow for the same branch/PR
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # REMOTE CACHE: Enabled if you have these secrets set
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+  # HUSKY: Disable Husky for CI
+  HUSKY: 0
+
+jobs:
+  install:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Setup Project
+        id: setup
+        uses: ./.github/actions/setup
+
+      - name: Install Dependencies
+        # We use the output from our custom action to check cache status
+        if: steps.setup.outputs.cache-hit != 'true'
+        run: bun install --frozen-lockfile
+
+      - name: Fail Fast
+        if: failure()
+        uses: ./.github/actions/fail-fast
+
+  audit:
+    name: Audit
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Setup Project
+        uses: ./.github/actions/setup
+
+      - name: Security Audit
+        # Fails only on "high" or "critical" vulnerabilities
+        run: bun audit --level high
+
+      - name: Run Quality Checks
+        run: bun turbo run check-types quality
+
+  build:
+    name: Build
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Setup Project
+        uses: ./.github/actions/setup
+
+      - name: Run Build
+        run: bun turbo run build
+
+      - name: Fail Fast
+        if: failure()
+        uses: ./.github/actions/fail-fast

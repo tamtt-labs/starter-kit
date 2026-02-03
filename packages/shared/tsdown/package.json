@@ -1,0 +1,29 @@
+{
+  "name": "@tamtt-labs/tsdown",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.mjs",
+      "./package.json": "./package.json"
+    }
+  },
+  "scripts": {
+    "dev": "bun run build -- --watch",
+    "build": "tsdown --tsconfig tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@rollup/plugin-babel": "^6.1.0",
+    "@tamtt-labs/tsconfig": "workspace:*",
+    "tsdown": "^0.20.1"
+  }
+}

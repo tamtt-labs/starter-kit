@@ -60,7 +60,7 @@ jobs:
         run: bun audit --level high
 
       - name: Run Quality Checks
-        run: bun turbo run check-types quality
+        run: bun turbo run typecheck quality
 
   build:
     name: Build

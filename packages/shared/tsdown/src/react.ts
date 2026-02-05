@@ -1,7 +1,7 @@
 import pluginBabel from "@rollup/plugin-babel";
-import { defineConfig } from "./utils";
+import { defineTsdownConfig } from "./utils";
 
-export default defineConfig({
+export const react = defineTsdownConfig({
   platform: "neutral",
   plugins: [
     pluginBabel({

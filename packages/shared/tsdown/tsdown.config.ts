@@ -1,3 +1,4 @@
-import { defineConfig } from "@/utils";
+import { defineTsdownConfig } from "@/utils";
+import { defineConfig } from "tsdown";
 
-export default defineConfig({});
+export default defineConfig(defineTsdownConfig({}));

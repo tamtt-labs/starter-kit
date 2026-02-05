@@ -1,3 +1,4 @@
 import { react } from "@tamtt-labs/tsdown";
+import { defineConfig } from "tsdown";
 
-export default react;
+export default defineConfig(react);

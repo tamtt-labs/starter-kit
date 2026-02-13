@@ -1,16 +1,21 @@
 {
-  "name": "design-system",
+  "name": "@tamtt-labs/design-system",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
+    "./tailwind.css": "./dist/tailwind.css",
     "./package.json": "./package.json"
   },
   "publishConfig": {
     "exports": {
       ".": "./dist/index.js",
+      "./tailwind.css": {
+        "style": "./dist/tailwind.css",
+        "default": "./dist/tailwind.css"
+      },
       "./package.json": "./package.json"
     }
   },

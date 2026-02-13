@@ -14,4 +14,5 @@ export const react = defineTsdownConfig({
       extensions: [".js", ".jsx", ".ts", ".tsx"],
     }),
   ],
+  external: ["react", "react-dom"],
 });

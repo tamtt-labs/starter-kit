@@ -1,0 +1,6 @@
+{
+  "extends": "@tamtt-labs/tsconfig/react.json",
+  "compilerOptions": {
+    "types": ["vite/client", "bun"]
+  }
+}

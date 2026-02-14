@@ -21,7 +21,7 @@
   },
   "scripts": {
     "dev": "bun run build -- --watch",
-    "build": "tsdown --tsconfig tsconfig.build.json",
+    "build": "bun --bun tsdown --tsconfig tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist *.tsbuildinfo"
   },

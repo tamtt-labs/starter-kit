@@ -1,19 +1,15 @@
 {
-  "name": "@tamtt-labs/tsdown",
+  "name": "@tamtt-labs/ddd",
   "version": "0.0.0",
   "private": true,
-  "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "types": "./dist/index.d.mts",
   "exports": {
     ".": "./dist/index.mjs",
     "./package.json": "./package.json"
-  },
-  "publishConfig": {
-    "exports": {
-      ".": "./dist/index.mjs",
-      "./package.json": "./package.json"
-    }
   },
   "scripts": {
     "dev": "bun run build -- --watch",
@@ -21,15 +17,10 @@
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist *.tsbuildinfo"
   },
-  "dependencies": {
-    "@rollup/plugin-babel": "^6.1.0"
-  },
   "devDependencies": {
     "@tamtt-labs/tsconfig": "workspace:*",
-    "tsdown": "^0.20.2"
-  },
-  "peerDependencies": {
-    "babel-plugin-react-compiler": "^1.0.0",
-    "tsdown": "^0.20.2"
+    "@tamtt-labs/tsdown": "workspace:*",
+    "tsdown": "^0.20.2",
+    "typescript": "^5.9.3"
   }
 }

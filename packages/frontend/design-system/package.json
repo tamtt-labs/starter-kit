@@ -40,7 +40,7 @@
   "devDependencies": {
     "@tamtt-labs/tsconfig": "workspace:*",
     "@tamtt-labs/tsdown": "workspace:*",
-    "@types/node": "^24.10.1",
+    "@types/node": "^25.2.3",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "babel-plugin-react-compiler": "^1.0.0",

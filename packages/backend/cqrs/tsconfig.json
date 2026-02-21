@@ -1,0 +1,10 @@
+{
+  "extends": "@tamtt-labs/tsconfig/base.json",
+  "compilerOptions": {
+    "types": ["bun"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}

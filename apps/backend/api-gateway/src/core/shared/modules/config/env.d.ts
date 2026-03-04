@@ -1,11 +1,14 @@
 declare module "bun" {
   interface Env {
-    PORT: number;
+    APP_PORT: number;
+    APP_NAME: string;
+    APP_ORIGIN: string;
 
-    BETTER_AUTH_SECRET: string;
-    BETTER_AUTH_URL: string;
+    AUTH_SECRET: string;
+    AUTH_OTP_EXPIRES_IN: number;
+    AUTH_SESSION_EXPIRES_IN: number;
+    AUTH_SESSION_CACHE_MAX_AGE: number;
 
-    AUTHENTICATION_SESSION_EXPIRES_IN: number;
-    AUTHENTICATION_COOKIE_CACHE_MAX_AGE: number;
+    DATABASE_URL: string;
   }
 }

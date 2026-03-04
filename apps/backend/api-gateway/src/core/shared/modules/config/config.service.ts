@@ -4,8 +4,7 @@ import { t } from "elysia";
 export class ConfigService extends TypeboxConfigService<Bun.Env> {
   constructor() {
     super({
-      TZ: t.Optional(t.String()).default("UTC"),
-      PORT: t.Number(),
+      TZ: t.Optional(t.String()),
       NODE_ENV: t.Union([
         t.Literal("development"),
         t.Literal("production"),
@@ -13,13 +12,19 @@ export class ConfigService extends TypeboxConfigService<Bun.Env> {
         t.Literal("test"),
       ]),
 
-      // BetterAuth
-      BETTER_AUTH_SECRET: t.String(),
-      BETTER_AUTH_URL: t.String(),
+      // Application
+      APP_PORT: t.Number(),
+      APP_NAME: t.String(),
+      APP_ORIGIN: t.String(),
 
-      // Authentication
-      AUTHENTICATION_SESSION_EXPIRES_IN: t.Number(),
-      AUTHENTICATION_COOKIE_CACHE_MAX_AGE: t.Number(),
+      // BetterAuth
+      AUTH_SECRET: t.String(),
+      AUTH_SESSION_EXPIRES_IN: t.Number(),
+      AUTH_SESSION_CACHE_MAX_AGE: t.Number(),
+      AUTH_OTP_EXPIRES_IN: t.Number(),
+
+      // Database
+      DATABASE_URL: t.String(),
     });
   }
 }

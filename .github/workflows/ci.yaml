@@ -57,7 +57,7 @@ jobs:
 
       - name: Security Audit
         # Fails only on "high" or "critical" vulnerabilities
-        run: bun audit --prod --level high
+        run: bun audit --audit-level=high --prod
 
       - name: Run Quality Checks
         run: bun turbo run typecheck quality

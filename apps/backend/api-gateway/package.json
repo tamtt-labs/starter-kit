@@ -16,11 +16,11 @@
     "migration:run": "bun run --bun database/migrate"
   },
   "dependencies": {
-    "@better-auth/passkey": "^1.5.1",
+    "@better-auth/passkey": "^1.5.3",
     "@elysiajs/cors": "^1.4.1",
     "@tamtt-labs/cqrs": "workspace:*",
     "@tamtt-labs/ddd": "workspace:*",
-    "better-auth": "^1.5.1",
+    "better-auth": "^1.5.3",
     "drizzle-orm": "^0.45.1",
     "elysia": "^1.4.27"
   },

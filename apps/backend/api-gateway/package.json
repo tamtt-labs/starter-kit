@@ -7,7 +7,7 @@
   "types": "./src/index.ts",
   "scripts": {
     "test": "bun test",
-    "build": "bun build --minify-whitespace --minify-syntax --outfile ./dist/index.js src/index.ts",
+    "build": "bun build --target=bun --minify-whitespace --minify-syntax --outfile ./dist/index.js src/index.ts",
     "start": "NODE_ENV=production bun ./dist/index.js",
     "dev": "NODE_ENV=development bun run --watch src/index.ts",
     "typecheck": "tsc --noEmit",
@@ -16,6 +16,7 @@
     "migration:run": "bun run --bun database/migrate"
   },
   "dependencies": {
+    "@better-auth/drizzle-adapter": "^1.5.3",
     "@better-auth/passkey": "^1.5.3",
     "@elysiajs/cors": "^1.4.1",
     "@tamtt-labs/cqrs": "workspace:*",

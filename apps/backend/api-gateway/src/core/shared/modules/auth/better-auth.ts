@@ -2,8 +2,9 @@ import { passkey } from "@better-auth/passkey";
 import { UniqueEntityId } from "@tamtt-labs/ddd";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { betterAuth as betterAuthFactory } from "better-auth/minimal";
-import { anonymous, organization } from "better-auth/plugins";
+import { anonymous, openAPI, organization } from "better-auth/plugins";
 import { emailOTP } from "better-auth/plugins/email-otp";
+import { drizzle } from "drizzle-orm/bun-sql";
 import { configService } from "../config/config.module";
 import { database } from "../database/drizzle.module";
 import { authSchema } from "./schema";
@@ -11,15 +12,16 @@ import { authSchema } from "./schema";
 // Extract domain from APP_ORIGIN for passkey rpID
 const appUrl = new URL(configService.get("APP_ORIGIN"));
 const rpID = appUrl.hostname;
+const basePath = "/auth";
 
 export const betterAuth = betterAuthFactory({
   appName: configService.get("APP_NAME"),
   secret: configService.get("AUTH_SECRET"),
   trustedOrigins: [configService.get("APP_ORIGIN")],
   baseURL: configService.get("APP_ORIGIN"),
-  basePath: "/auth",
+  basePath,
 
-  database: drizzleAdapter(database.write, {
+  database: drizzleAdapter(drizzle({ client: database.write, casing: "snake_case" }), {
     provider: "pg",
     schema: authSchema,
   }),
@@ -52,6 +54,7 @@ export const betterAuth = betterAuthFactory({
   // },
 
   plugins: [
+    openAPI(),
     anonymous(),
     organization({
       allowUserToCreateOrganization: true,
@@ -89,3 +92,31 @@ export const betterAuth = betterAuthFactory({
     },
   },
 });
+
+let _schema: ReturnType<typeof betterAuth.api.generateOpenAPISchema>;
+const getSchema = async () => (_schema ??= betterAuth.api.generateOpenAPISchema());
+
+export const betterAuthOpenApi = {
+  getPaths: (prefix = basePath) =>
+    getSchema().then(({ paths }) => {
+      const reference: typeof paths = Object.create(null);
+
+      for (const path of Object.keys(paths)) {
+        const key = prefix + path;
+
+        if (!paths[path]) {
+          continue;
+        }
+
+        reference[key] = paths[path];
+
+        for (const method of Object.keys(paths[path])) {
+          const operation = (reference[key] as any)[method];
+          operation.tags = ["Better Auth"];
+        }
+      }
+
+      return reference;
+    }) as Promise<any>,
+  components: getSchema().then(({ components }) => components) as Promise<any>,
+} as const;

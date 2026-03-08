@@ -42,4 +42,20 @@ export class TypeboxConfigService<TEnv extends Bun.Env> implements IConfigServic
 
     throw new Error(`Invalid environment variables:\n${JSON.stringify(errors, null, 2)}`);
   }
+
+  public isProduction() {
+    return this.get("NODE_ENV") === "production";
+  }
+
+  public isDevelopment() {
+    return this.get("NODE_ENV") === "development";
+  }
+
+  public isStaging() {
+    return this.get("NODE_ENV") === "staging";
+  }
+
+  public isTest() {
+    return this.get("NODE_ENV") === "test";
+  }
 }

@@ -1,5 +1,6 @@
 import { TypeboxConfigService } from "@tamtt-labs/ddd";
 import { t } from "elysia";
+import "./env.d.ts";
 
 export class ConfigService extends TypeboxConfigService<Bun.Env> {
   constructor() {

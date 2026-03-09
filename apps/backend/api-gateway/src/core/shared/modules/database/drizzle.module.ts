@@ -1,5 +1,5 @@
-import { Drizzle } from "../../utils/drizzle";
 import { configService } from "../config/config.module";
+import { Drizzle } from "./drizzle";
 
 export const database = {
   read: new Bun.SQL({

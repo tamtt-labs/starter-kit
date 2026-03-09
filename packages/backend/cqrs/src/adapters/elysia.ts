@@ -15,24 +15,12 @@ import type {
   Type,
 } from "../interfaces";
 
-type CqrsModule = ReturnType<typeof Cqrs.createModule>;
-
 type CqrsRegistration = {
   commands?: ICommandHandler[];
   events?: IEventHandler[];
   queries?: IQueryHandler[];
   sagas?: ISagaProvider[];
   aggregateRoots?: Type<AggregateRoot>[];
-};
-
-type CqrsModuleInjectedElysia = {
-  decorator: {
-    commandBus: CommandBus;
-    eventBus: EventBus;
-    eventPublisher: EventPublisher;
-    queryBus: QueryBus;
-    unhandledExceptionBus: UnhandledExceptionBus;
-  };
 };
 
 export class Cqrs {
@@ -43,7 +31,7 @@ export class Cqrs {
     const eventPublisher = new EventPublisher(eventBus);
     const queryBus = new QueryBus(options);
 
-    return new Elysia({ name: options?.name ?? "CqrsModule" })
+    const cqrsModule = new Elysia({ name: options?.name ?? "CqrsModule" })
       .decorate({
         commandBus,
         eventBus,
@@ -52,89 +40,85 @@ export class Cqrs {
         unhandledExceptionBus,
       })
       .onStop((app) => app.decorator.eventBus.destroy());
-  }
 
-  static register({ commands, events, queries, sagas, aggregateRoots }: CqrsRegistration) {
-    return <T extends CqrsModuleInjectedElysia>(app: T) => {
-      assertCqrsModuleInjected(app);
-      return app.decorate((decorator) => {
-        decorator.commandBus.register(...(commands ?? []));
-        decorator.eventBus.register(...(events ?? []));
-        decorator.queryBus.register(...(queries ?? []));
-        decorator.eventBus.registerSagas(...(sagas ?? []));
-        mergeContext(decorator.eventBus, aggregateRoots);
-        return decorator;
-      });
+    const register = ({ commands, events, queries, sagas, aggregateRoots }: CqrsRegistration) => {
+      return <T>(app: T) => {
+        assertElysia(app);
+        return app.use(cqrsModule).decorate((decorator) => {
+          decorator.commandBus.register(...(commands ?? []));
+          decorator.eventBus.register(...(events ?? []));
+          decorator.queryBus.register(...(queries ?? []));
+          decorator.eventBus.registerSagas(...(sagas ?? []));
+          mergeContext(decorator.eventBus, aggregateRoots);
+          return decorator;
+        });
+      };
     };
-  }
 
-  static registerCommands(...commands: ICommandHandler[]) {
-    return <T extends CqrsModuleInjectedElysia>(app: T) => {
-      assertCqrsModuleInjected(app);
-      return app.decorate((decorator) => {
-        assertCqrsModuleInjected(app);
-        decorator.commandBus.register(...(commands ?? []));
-        return decorator;
-      });
+    const registerCommands = (...commands: ICommandHandler[]) => {
+      return <T>(app: T) => {
+        assertElysia(app);
+        return app.use(cqrsModule).decorate((decorator) => {
+          decorator.commandBus.register(...(commands ?? []));
+          return decorator;
+        });
+      };
     };
-  }
 
-  static registerEvents(...events: IEventHandler[]) {
-    return <T extends CqrsModuleInjectedElysia>(app: T) => {
-      assertCqrsModuleInjected(app);
-      return app.decorate((decorator) => {
-        decorator.eventBus.register(...(events ?? []));
-        return decorator;
-      });
+    const registerEvents = (...events: IEventHandler[]) => {
+      return <T>(app: T) => {
+        assertElysia(app);
+        return app.use(cqrsModule).decorate((decorator) => {
+          decorator.eventBus.register(...(events ?? []));
+          return decorator;
+        });
+      };
     };
-  }
 
-  static registerQueries(...queries: IQueryHandler[]) {
-    return <T extends CqrsModuleInjectedElysia>(app: T) => {
-      assertCqrsModuleInjected(app);
-      return app.decorate((decorator) => {
-        assertCqrsModuleInjected(app);
-        decorator.queryBus.register(...(queries ?? []));
-        return decorator;
-      });
+    const registerQueries = (...queries: IQueryHandler[]) => {
+      return <T>(app: T) => {
+        assertElysia(app);
+        return app.use(cqrsModule).decorate((decorator) => {
+          decorator.queryBus.register(...(queries ?? []));
+          return decorator;
+        });
+      };
     };
-  }
 
-  static registerSagas(...sagas: ISagaProvider[]) {
-    return <T extends CqrsModuleInjectedElysia>(app: T) => {
-      assertCqrsModuleInjected(app);
-      return app.decorate((decorator) => {
-        assertCqrsModuleInjected(app);
-        decorator.eventBus.registerSagas(...(sagas ?? []));
-        return decorator;
-      });
+    const registerSagas = (...sagas: ISagaProvider[]) => {
+      return <T>(app: T) => {
+        assertElysia(app);
+        return app.use(cqrsModule).decorate((decorator) => {
+          decorator.eventBus.registerSagas(...(sagas ?? []));
+          return decorator;
+        });
+      };
     };
-  }
 
-  static registerAggregateRoots(...aggregateRoots: Type<AggregateRoot>[]) {
-    return <T extends CqrsModuleInjectedElysia>(app: T) => {
-      assertCqrsModuleInjected(app);
-      return app.decorate((decorator) => {
-        assertCqrsModuleInjected(app);
-        mergeContext(decorator.eventBus, aggregateRoots);
-        return decorator;
-      });
+    const registerAggregateRoots = (...aggregateRoots: Type<AggregateRoot>[]) => {
+      return <T>(app: T) => {
+        assertElysia(app);
+        return app.use(cqrsModule).decorate((decorator) => {
+          mergeContext(decorator.eventBus, aggregateRoots);
+          return decorator;
+        });
+      };
     };
+
+    return Object.assign(cqrsModule, {
+      register,
+      registerCommands,
+      registerEvents,
+      registerQueries,
+      registerSagas,
+      registerAggregateRoots,
+    });
   }
 }
 
-function assertCqrsModuleInjected(app: unknown): asserts app is CqrsModule {
-  const isCqrsModuleInjected =
-    app instanceof Elysia &&
-    "commandBus" in app.decorator &&
-    "eventBus" in app.decorator &&
-    "eventPublisher" in app.decorator &&
-    "queryBus" in app.decorator &&
-    "unhandledExceptionBus" in app.decorator;
-
-  if (!isCqrsModuleInjected) {
-    throw new Error(
-      "CqrsModule must be created with Cqrs.createModule() and injected to the Elysia app",
-    );
+const assertElysia: (app: unknown) => asserts app is Elysia = (app) => {
+  const isElysia = app instanceof Elysia;
+  if (!isElysia) {
+    throw new Error("App is not an Elysia instance");
   }
-}
+};

@@ -1,8 +1,8 @@
 import Elysia from "elysia";
-import { betterAuth } from "./better-auth";
+import { BetterAuthModule } from "./better-auth.module";
 
 export type * as SimpleWebAuthn from "@simplewebauthn/server";
 
 export const AuthModule = new Elysia({ name: "AuthModule" })
-  .decorate({ betterAuth })
-  .mount("/", betterAuth.handler);
+  .use(BetterAuthModule)
+  .mount("/", BetterAuthModule.decorator.betterAuth.handler);

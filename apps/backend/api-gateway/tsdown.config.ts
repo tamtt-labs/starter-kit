@@ -8,4 +8,5 @@ export default defineConfig((inlineConfig, context) => ({
   clean: false, // Avoid removing the dist directory
   dts: { emitDtsOnly: true }, // Only emit .d.ts files
   exports: false,
+  inlineOnly: false,
 }));

@@ -5,7 +5,6 @@ import { HeroKilledDragonHandler } from "@/__tests__/src/hero/events/hero-killed
 import { GetHeroesHandler } from "@/__tests__/src/hero/queries/get-heroes.query";
 import { HeroRepository } from "@/__tests__/src/hero/repositories/hero.repository";
 import { HeroGameSagas } from "@/__tests__/src/hero/sagas/hero-game.saga";
-import { Cqrs } from "@/adapters/elysia";
 import Elysia from "elysia";
 import { CqrsModule } from "./cqrs.module";
 
@@ -15,7 +14,7 @@ export const HeroModule = new Elysia()
   .use(HeroRepositoryPlugin)
   .use(CqrsModule)
   .use((app) =>
-    Cqrs.register({
+    CqrsModule.register({
       commands: [
         new KillDragonHandler(app.decorator.heroRepository, app.decorator.eventPublisher),
         new DropAncientItemHandler(app.decorator.heroRepository, app.decorator.eventPublisher),

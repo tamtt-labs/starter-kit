@@ -22,7 +22,7 @@
     "clean": "rm -rf dist *.tsbuildinfo"
   },
   "dependencies": {
-    "@rollup/plugin-babel": "^6.1.0"
+    "@rollup/plugin-babel": "^7.0.0"
   },
   "devDependencies": {
     "@tamtt-labs/tsconfig": "workspace:*",

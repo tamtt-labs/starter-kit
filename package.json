@@ -28,6 +28,10 @@
     "turbo": "^2.8.13",
     "typescript": "^5.9.3"
   },
+  "resolutions": {
+    "@hono/node-server": "^1.19.11",
+    "hono": "^4.12.5"
+  },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,mjs,cjs,json,md}": [
       "bun format:fix",

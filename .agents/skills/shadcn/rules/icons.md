@@ -1,6 +1,18 @@
 # Icons
 
-**Always use the project's configured `iconLibrary` for imports.** Check the `iconLibrary` field from project context: `lucide` → `lucide-react`, `tabler` → `@tabler/icons-react`, etc. Never assume `lucide-react`.
+**Always import icons from the design system package** (`@tamtt-labs/design-system`), which exports from `lucide-animated`. The `iconLibrary` field in `components.json` is set to `"lucide"` for shadcn CLI compatibility. All icons are animated by default via Framer Motion.
+
+## Icon Library Architecture
+
+The design system uses a **hybrid icon system** combining animated and static icons:
+
+- **Animated icons** (from `lucide-animated`): Animate on hover via Framer Motion
+  - ChevronDownIcon, ChevronRightIcon, HomeIcon, MenuIcon, RouteIcon, SparklesIcon, WavesIcon, XIcon, ZapIcon
+
+- **Static icons** (from `lucide-react`): Fallback for icons not available in lucide-animated
+  - NetworkIcon, ServerIcon, ShieldIcon, SquareFunctionIcon, StickyNoteIcon
+
+Both types use the same import: `import { IconName } from "@tamtt-labs/design-system"` and follow the "Icon" suffix convention.
 
 ---
 
@@ -90,8 +102,8 @@ function StatusBadge({ icon }: { icon: string }) {
 **Correct:**
 
 ```tsx
-// Import from the project's configured iconLibrary (e.g. lucide-react, @tabler/icons-react).
-import { CheckIcon } from "lucide-react";
+// Import icons from the design system package, which provides animated Lucide icons.
+import { CheckIcon } from "@tamtt-labs/design-system";
 
 function StatusBadge({ icon: Icon }: { icon: React.ComponentType }) {
   return <Icon />;

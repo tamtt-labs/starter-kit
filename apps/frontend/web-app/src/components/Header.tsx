@@ -1,15 +1,15 @@
 import { Link } from "@tanstack/react-router";
 
 import {
-  ChevronDown,
-  ChevronRight,
-  Home,
-  Menu,
-  Network,
-  SquareFunction,
-  StickyNote,
-  X,
-} from "lucide-react";
+  ChevronDownIcon,
+  ChevronRightIcon,
+  HomeIcon,
+  MenuIcon,
+  NetworkIcon,
+  SquareFunctionIcon,
+  StickyNoteIcon,
+  XIcon,
+} from "@tamtt-labs/design-system";
 import { useState } from "react";
 
 export default function Header() {
@@ -24,7 +24,7 @@ export default function Header() {
           className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
           aria-label="Open menu"
         >
-          <Menu size={24} />
+          <MenuIcon size={24} />
         </button>
         <h1 className="ml-4 text-xl font-semibold">
           <Link to="/">
@@ -45,7 +45,7 @@ export default function Header() {
             className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
             aria-label="Close menu"
           >
-            <X size={24} />
+            <XIcon size={24} />
           </button>
         </div>
 
@@ -59,7 +59,7 @@ export default function Header() {
                 "flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
             }}
           >
-            <Home size={20} />
+            <HomeIcon size={20} />
             <span className="font-medium">Home</span>
           </Link>
 
@@ -74,7 +74,7 @@ export default function Header() {
                 "flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
             }}
           >
-            <SquareFunction size={20} />
+            <SquareFunctionIcon size={20} />
             <span className="font-medium">Start - Server Functions</span>
           </Link>
 
@@ -87,7 +87,7 @@ export default function Header() {
                 "flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
             }}
           >
-            <Network size={20} />
+            <NetworkIcon size={20} />
             <span className="font-medium">Start - API Request</span>
           </Link>
 
@@ -101,7 +101,7 @@ export default function Header() {
                   "flex-1 flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
               }}
             >
-              <StickyNote size={20} />
+              <StickyNoteIcon size={20} />
               <span className="font-medium">Start - SSR Demos</span>
             </Link>
             <button
@@ -114,9 +114,9 @@ export default function Header() {
               }
             >
               {groupedExpanded.StartSSRDemo ? (
-                <ChevronDown size={20} />
+                <ChevronDownIcon size={20} />
               ) : (
-                <ChevronRight size={20} />
+                <ChevronRightIcon size={20} />
               )}
             </button>
           </div>
@@ -131,7 +131,7 @@ export default function Header() {
                     "flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
                 }}
               >
-                <StickyNote size={20} />
+                <StickyNoteIcon size={20} />
                 <span className="font-medium">SPA Mode</span>
               </Link>
 
@@ -144,7 +144,7 @@ export default function Header() {
                     "flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
                 }}
               >
-                <StickyNote size={20} />
+                <StickyNoteIcon size={20} />
                 <span className="font-medium">Full SSR</span>
               </Link>
 
@@ -157,7 +157,7 @@ export default function Header() {
                     "flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
                 }}
               >
-                <StickyNote size={20} />
+                <StickyNoteIcon size={20} />
                 <span className="font-medium">Data Only</span>
               </Link>
             </div>

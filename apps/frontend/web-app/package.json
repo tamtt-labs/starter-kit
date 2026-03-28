@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@tamtt-labs/design-system": "workspace:*",
-    "@tanstack/react-devtools": "^0.9.5",
+    "@tanstack/react-devtools": "^0.10.0",
     "@tanstack/react-router": "^1.159.5",
     "@tanstack/react-router-devtools": "^1.159.5",
     "@tanstack/react-router-ssr-query": "^1.159.5",

@@ -24,14 +24,18 @@
     "@rolldown/plugin-babel": "^0.2.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.3.2",
-    "oxfmt": "^0.40.0",
+    "oxfmt": "^0.43.0",
     "oxlint": "^1.51.0",
-    "turbo": "^2.8.13",
+    "turbo": "^2.9.5",
     "typescript": "^5.9.3"
   },
   "resolutions": {
     "@hono/node-server": "^1.19.11",
-    "hono": "^4.12.5"
+    "defu": "^6.1.7",
+    "hono": "^4.12.5",
+    "kysely": "^0.28.15",
+    "path-to-regexp": "^8.4.2",
+    "picomatch": "^2.3.2"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,mjs,cjs,json,md}": [

@@ -1,11 +1,24 @@
-import type { UserConfig, UserConfigFn } from "tsdown";
+import { mergeConfig, type InlineConfig, type UserConfig } from "tsdown";
 
-export const defineTsdownConfig = (userConfig?: UserConfig): UserConfigFn => {
-  return (inlineConfig) => ({
-    minify: !inlineConfig.watch,
-    clean: !inlineConfig.watch,
-    exports: !inlineConfig.watch,
-    skipNodeModulesBundle: Boolean(inlineConfig.watch),
-    ...userConfig,
-  });
+type BaseTsdownConfigFn = (
+  inlineConfig: InlineConfig,
+  context: {
+    ci: boolean;
+    rootConfig?: UserConfig;
+  },
+) => UserConfig;
+
+export const defineTsdownConfig = (userConfig?: UserConfig): BaseTsdownConfigFn => {
+  return (inlineConfig) =>
+    mergeConfig(
+      {
+        minify: !inlineConfig.watch,
+        clean: !inlineConfig.watch,
+        exports: !inlineConfig.watch,
+        deps: {
+          skipNodeModulesBundle: Boolean(inlineConfig.watch),
+        },
+      },
+      userConfig ?? {},
+    );
 };

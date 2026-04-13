@@ -31,7 +31,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "jsdom": "^29.0.2",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "vite": "^8.0.7",
     "vite-tsconfig-paths": "^6.1.1",
     "web-vitals": "^5.1.0"

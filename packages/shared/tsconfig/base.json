@@ -38,10 +38,11 @@
     "preserveWatchOutput": true,
 
     "tsBuildInfoFile": "${configDir}/tsconfig.tsbuildinfo",
-    "baseUrl": "${configDir}",
     "paths": {
       "@/*": ["${configDir}/src/*"]
-    }
+    },
+
+    "types": ["bun"]
   },
   "include": [
     "${configDir}/.commitlintrc.ts",

@@ -1,7 +1,7 @@
-import { defineConfig } from "tsdown";
-import { base } from "./src";
+import { defineTsdownConfig } from "./src/utils";
 
-export default defineConfig({
-  ...base,
-  external: ["tsdown", "babel-plugin-react-compiler"],
+export default defineTsdownConfig({
+  deps: {
+    neverBundle: ["tsdown", "babel-plugin-react-compiler"],
+  },
 });

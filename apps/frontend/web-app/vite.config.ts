@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [
     viteTsConfigPaths(),
     tailwindcss(),
-    tanstackStart(),
+    tanstackStart({ srcDirectory: "src" }),
     viteReact(),
     babel({ presets: [reactCompilerPreset()] }),
   ],

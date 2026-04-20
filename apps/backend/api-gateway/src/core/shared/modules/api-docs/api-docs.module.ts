@@ -7,11 +7,14 @@ export const ApiDocsModule = new Elysia({ name: "ApiDocsModule" })
   .use(BetterAuthModule)
   .use(async ({ decorator }) =>
     openapi({
-      references: fromTypes(
-        configService.isDevelopment() || configService.isTest()
-          ? "src/index.ts"
-          : "dist/index.d.ts",
-      ),
+      // fromTypes requires filesystem access — only available in dev (wrangler dev has fs)
+      references: configService.isProduction()
+        ? undefined
+        : fromTypes(
+            configService.isDevelopment() || configService.isTest()
+              ? "src/index.ts"
+              : "dist/index.d.ts",
+          ),
       documentation: {
         components: await decorator.betterAuthOpenApi.components,
         paths: await decorator.betterAuthOpenApi.getPaths(),

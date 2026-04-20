@@ -1,15 +1,16 @@
-import { drizzle } from "drizzle-orm/bun-sql";
+import type { PgDatabase, PgQueryResultHKT } from "drizzle-orm/pg-core";
 import Elysia from "elysia";
 import { assertElysia } from "../../utils/assert-elysia";
+import type { DrizzleFactory } from "./drizzle-factory/drizzle-factory";
 
 type DrizzleOptions = {
-  client: Bun.SQL;
-  casing?: "snake_case" | "camelCase";
+  drizzleFactory: DrizzleFactory;
+  name?: string;
 };
 
 export class Drizzle {
-  static createModule(options: DrizzleOptions & { name?: string }) {
-    const moduleName = options?.name ?? "DrizzleModule";
+  static createModule(options: DrizzleOptions) {
+    const moduleName = options.name ?? "DrizzleModule";
     const drizzleModule = new Elysia({ name: moduleName }).decorate(moduleName, options);
 
     const register = <
@@ -21,17 +22,18 @@ export class Drizzle {
     ) => {
       return <TApp>(app: TApp) => {
         assertElysia(app);
+
+        type DrizzleContext = {
+          [name in TDecoratorName]: PgDatabase<PgQueryResultHKT, TSchema>;
+        };
+
         return app.use(drizzleModule).use(({ decorator }) =>
           new Elysia({ name: decoratorName })
             .decorate(() => decorator)
-            .decorate(
-              decoratorName,
-              drizzle({
-                client: decorator[moduleName]!.client,
-                casing: decorator[moduleName]!.casing ?? "snake_case",
-                schema,
-              }),
-            ),
+            .resolve<DrizzleContext, "global">({ as: "global" }, () => {
+              const drizzle = decorator[moduleName]!.drizzleFactory.createDrizzle(schema);
+              return { [decoratorName]: drizzle } as DrizzleContext;
+            }),
         );
       };
     };

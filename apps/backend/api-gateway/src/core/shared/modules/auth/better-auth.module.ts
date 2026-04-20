@@ -12,20 +12,20 @@ import { authSchema } from "./schema";
 export const BetterAuthModule = new Elysia({ name: "BetterAuthModule" })
   .use(ConfigModule)
   .use(DrizzleWriteModule.register("authRepository", authSchema))
-  .decorate((decorator) => {
+  .resolve((context) => {
     // Extract domain from APP_ORIGIN for passkey rpID
-    const appUrl = new URL(decorator.configService.get("APP_ORIGIN"));
+    const appUrl = new URL(context.configService.get("APP_ORIGIN"));
     const rpID = appUrl.hostname;
     const basePath = "/auth";
 
     const betterAuth = betterAuthFactory({
-      appName: decorator.configService.get("APP_NAME"),
-      secret: decorator.configService.get("AUTH_SECRET"),
-      trustedOrigins: [decorator.configService.get("APP_ORIGIN")],
-      baseURL: decorator.configService.get("APP_ORIGIN"),
+      appName: context.configService.get("APP_NAME"),
+      secret: context.configService.get("AUTH_SECRET"),
+      trustedOrigins: [context.configService.get("APP_ORIGIN")],
+      baseURL: context.configService.get("APP_ORIGIN"),
       basePath,
 
-      database: drizzleAdapter(decorator.authRepository, {
+      database: drizzleAdapter(context.authRepository, {
         provider: "pg",
       }),
 
@@ -51,8 +51,8 @@ export const BetterAuthModule = new Elysia({ name: "BetterAuthModule" })
       // OAuth providers
       // socialProviders: {
       //   google: {
-      //     clientId: decorator.configService.get("GOOGLE_CLIENT_ID"),
-      //     clientSecret: decorator.configService.get("GOOGLE_CLIENT_SECRET"),
+      //     clientId: context.configService.get("GOOGLE_CLIENT_ID"),
+      //     clientSecret: context.configService.get("GOOGLE_CLIENT_SECRET"),
       //   },
       // },
 
@@ -68,9 +68,9 @@ export const BetterAuthModule = new Elysia({ name: "BetterAuthModule" })
           // rpID: Relying Party ID - domain name in production, 'localhost' for dev
           rpID,
           // rpName: Human-readable name for your app
-          rpName: decorator.configService.get("APP_NAME"),
+          rpName: context.configService.get("APP_NAME"),
           // origin: URL where auth occurs (no trailing slash)
-          origin: decorator.configService.get("APP_ORIGIN"),
+          origin: context.configService.get("APP_ORIGIN"),
         }),
         emailOTP({
           sendVerificationOTP: async () => {
@@ -78,7 +78,7 @@ export const BetterAuthModule = new Elysia({ name: "BetterAuthModule" })
           },
           otpLength: 6,
           allowedAttempts: 3,
-          expiresIn: decorator.configService.get("AUTH_OTP_EXPIRES_IN"),
+          expiresIn: context.configService.get("AUTH_OTP_EXPIRES_IN") ?? 300, // 5 days
         }),
       ],
 
@@ -90,8 +90,8 @@ export const BetterAuthModule = new Elysia({ name: "BetterAuthModule" })
 
       cookies: {
         session: {
-          expiresIn: decorator.configService.get("AUTH_SESSION_EXPIRES_IN"),
-          cacheMaxAge: decorator.configService.get("AUTH_SESSION_CACHE_MAX_AGE"),
+          expiresIn: context.configService.get("AUTH_SESSION_EXPIRES_IN") ?? 604800, // 7 days
+          cacheMaxAge: context.configService.get("AUTH_SESSION_CACHE_MAX_AGE") ?? 300, // 5 days
         },
       },
     });
@@ -124,5 +124,6 @@ export const BetterAuthModule = new Elysia({ name: "BetterAuthModule" })
       components: getSchema().then(({ components }) => components) as Promise<any>,
     } as const;
 
-    return { ...decorator, betterAuth, betterAuthOpenApi };
-  });
+    return { betterAuth, betterAuthOpenApi };
+  })
+  .all("/auth/*", (context) => context.betterAuth.handler);

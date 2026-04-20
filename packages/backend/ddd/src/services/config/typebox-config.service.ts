@@ -1,33 +1,69 @@
 import { Type, type TSchema } from "@sinclair/typebox";
 import { TypeCompiler } from "@sinclair/typebox/compiler";
 import { Value } from "@sinclair/typebox/value";
-import type { IConfigService } from "./config.service";
+import type { ConfigServiceKey, ConfigServiceValue, IConfigService } from "./config.service";
 
-type EnvProperties<TEnv extends Bun.Env> = Record<keyof TEnv, TSchema>;
-type EnvRaw<TEnv extends Bun.Env> = Record<keyof TEnv, string | undefined>;
+type EnvProperties<TEnv> = Record<keyof TEnv, TSchema>;
 
-export class TypeboxConfigService<TEnv extends Bun.Env> implements IConfigService<TEnv> {
-  private readonly parsedEnv: TEnv;
+type Source<TEnv> = Partial<{
+  [Key in keyof TEnv]: string;
+}>;
+
+type StaticConfig<TEnv> = {
+  properties: EnvProperties<TEnv>;
+  source: Source<TEnv>;
+};
+
+type RuntimeConfig<TEnv> = {
+  properties: EnvProperties<TEnv>;
+  sourceFactory: () => Source<TEnv>;
+};
+
+export class TypeboxConfigService<TStaticEnv, TRuntimeEnv = {}> implements IConfigService<
+  TStaticEnv,
+  TRuntimeEnv
+> {
+  private readonly staticEnv: TStaticEnv;
 
   constructor(
-    private readonly properties: EnvProperties<TEnv>,
-    private readonly sourceEnv?: EnvRaw<TEnv>,
+    private readonly staticConfig: StaticConfig<TStaticEnv>,
+    private readonly runtimeConfig?: RuntimeConfig<TRuntimeEnv>,
   ) {
-    this.parsedEnv = this.parseEnv();
+    this.staticEnv = this.parseStaticEnv();
   }
 
-  public get<T extends keyof TEnv>(key: T): TEnv[T] {
-    return this.parsedEnv[key];
+  public get<K extends ConfigServiceKey<TStaticEnv, TRuntimeEnv>>(
+    key: K,
+  ): ConfigServiceValue<TStaticEnv, TRuntimeEnv, K> {
+    return (this.staticEnv[key as keyof TStaticEnv] ??
+      this.parseRuntimeEnv()[key as keyof TRuntimeEnv]) as ConfigServiceValue<
+      TStaticEnv,
+      TRuntimeEnv,
+      K
+    >;
   }
 
-  private parseEnv(): TEnv {
-    const envSchema = Type.Object(this.properties);
+  private parseStaticEnv(): TStaticEnv {
+    return this.parseEnv(this.staticConfig.properties, this.staticConfig.source);
+  }
+
+  private parseRuntimeEnv(): TRuntimeEnv {
+    return this.runtimeConfig
+      ? this.parseEnv(this.runtimeConfig.properties, this.runtimeConfig.sourceFactory())
+      : ({} as TRuntimeEnv);
+  }
+
+  private parseEnv<TEnv>(
+    properties: EnvProperties<TEnv>,
+    source: Record<string, string | undefined>,
+  ): TEnv {
+    const envSchema = Type.Object(properties);
     const compiler = TypeCompiler.Compile(envSchema);
 
     const parsedEnv = Value.Parse(
       ["Clone", "Clean", "Default", "Decode", "Convert"],
       envSchema,
-      this.sourceEnv ?? Bun.env,
+      source,
     );
 
     const isValid = compiler.Check(parsedEnv);
@@ -44,18 +80,18 @@ export class TypeboxConfigService<TEnv extends Bun.Env> implements IConfigServic
   }
 
   public isProduction() {
-    return this.get("NODE_ENV") === "production";
+    return this.get("NODE_ENV" as ConfigServiceKey<TStaticEnv, TRuntimeEnv>) === "production";
   }
 
   public isDevelopment() {
-    return this.get("NODE_ENV") === "development";
+    return this.get("NODE_ENV" as ConfigServiceKey<TStaticEnv, TRuntimeEnv>) === "development";
   }
 
   public isStaging() {
-    return this.get("NODE_ENV") === "staging";
+    return this.get("NODE_ENV" as ConfigServiceKey<TStaticEnv, TRuntimeEnv>) === "staging";
   }
 
   public isTest() {
-    return this.get("NODE_ENV") === "test";
+    return this.get("NODE_ENV" as ConfigServiceKey<TStaticEnv, TRuntimeEnv>) === "test";
   }
 }

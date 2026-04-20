@@ -1,8 +1,11 @@
+import type { IdGenerator } from "./id-generator/id-generator";
+import { UuidIdGenerator } from "./id-generator/uuid-id-generator";
+
 export class UniqueEntityId<T extends string | number> {
   private _value: T;
 
-  constructor(id?: T) {
-    this._value = id ?? (Bun.randomUUIDv7() as T);
+  constructor(id?: T, idGenerator: IdGenerator = UuidIdGenerator) {
+    this._value = id ?? (idGenerator() as T);
   }
 
   public toString() {

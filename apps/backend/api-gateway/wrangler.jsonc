@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "api-gateway",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-04-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "env": {
+    // [ENV:DEVELOPMENT]
+    // Command: bun wrangler dev
+    "dev": {
+      "vars": {
+        "NODE_ENV": "development",
+        "APP_NAME": "api-gateway",
+        "APP_ORIGIN": "http://localhost:8787",
+        "AUTH_SECRET": "AaMqLjLbnE9PKpk01vKEwsaRUdfg1ozK",
+      },
+      "hyperdrive": [
+        {
+          "id": "<create via: wrangler hyperdrive create api-gateway-read-db --connection-string=postgres://...>",
+          "binding": "HYPERDRIVE_READ",
+          "localConnectionString": "postgresql://postgres:root@localhost:5432/starter-kit",
+        },
+        {
+          "id": "<create via: wrangler hyperdrive create api-gateway-write-db --connection-string=postgres://...>",
+          "binding": "HYPERDRIVE_WRITE",
+          "localConnectionString": "postgresql://postgres:root@localhost:5432/starter-kit",
+        },
+      ],
+    },
+  },
+}

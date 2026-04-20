@@ -1,23 +1,13 @@
 import { configService } from "../config/config.module";
 import { Drizzle } from "./drizzle";
-
-export const database = {
-  read: new Bun.SQL({
-    url: configService.get("DATABASE_URL"),
-    adapter: "postgres",
-  }),
-  write: new Bun.SQL({
-    url: configService.get("DATABASE_URL"),
-    adapter: "postgres",
-  }),
-};
+import { PostgresDrizzleFactory } from "./drizzle-factory/postgres-drizzle-factory";
 
 export const DrizzleReadModule = Drizzle.createModule({
-  client: database.read,
+  drizzleFactory: new PostgresDrizzleFactory(() => configService.get("READ_DATABASE_URL")),
   name: "DrizzleReadModule",
 });
 
 export const DrizzleWriteModule = Drizzle.createModule({
-  client: database.write,
+  drizzleFactory: new PostgresDrizzleFactory(() => configService.get("WRITE_DATABASE_URL")),
   name: "DrizzleWriteModule",
 });

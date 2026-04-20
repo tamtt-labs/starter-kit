@@ -1,5 +1,9 @@
 import { defineConfig } from "drizzle-kit";
 
+if (!Bun.env.WRITE_DATABASE_URL) {
+  throw new Error("Environment variable WRITE_DATABASE_URL is not set");
+}
+
 /**
  * Drizzle ORM configuration for Neon PostgreSQL database
  *
@@ -12,7 +16,7 @@ export default defineConfig({
   dialect: "postgresql",
   casing: "snake_case",
   dbCredentials: {
-    url: Bun.env.DATABASE_URL,
+    url: Bun.env.WRITE_DATABASE_URL,
   },
   migrations: {
     table: "migration",

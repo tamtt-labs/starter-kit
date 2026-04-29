@@ -8,9 +8,7 @@ export const ApiDocsModule = new Elysia({ name: "ApiDocsModule" })
   .use(async ({ decorator }) =>
     openapi({
       references: fromTypes(
-        configService.isDevelopment() || configService.isTest()
-          ? "src/index.ts"
-          : "dist/index.d.ts",
+        configService.isProduction() || configService.isTest() ? "index.d.ts" : "src/index.ts",
       ),
       documentation: {
         components: await decorator.betterAuthOpenApi.components,

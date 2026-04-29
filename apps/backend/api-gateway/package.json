@@ -7,9 +7,9 @@
   },
   "scripts": {
     "test": "bun test",
-    "build": "bun build --target=bun --minify-whitespace --minify-syntax --outfile ./dist/index.js src/index.ts && bun run build:types",
+    "build": "bun build --compile --minify-whitespace --minify-syntax --outfile ./dist/server src/index.ts && bun run build:types",
     "build:types": "bun --bun tsdown --tsconfig tsconfig.build.json",
-    "start": "NODE_ENV=production bun ./dist/index.js",
+    "start": "NODE_ENV=production ./dist/server",
     "dev": "NODE_ENV=development bun run --watch src/index.ts",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist *.tsbuildinfo",

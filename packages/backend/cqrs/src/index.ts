@@ -8,3 +8,4 @@ export * from "./interfaces";
 export * from "./operators";
 export * from "./query-bus";
 export * from "./unhandled-exception-bus";
+export * from "./cqrs";

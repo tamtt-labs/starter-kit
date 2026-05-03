@@ -7,7 +7,7 @@ import { defineConfig } from "drizzle-kit";
  * @see https://orm.drizzle.team/llms.txt
  */
 export default defineConfig({
-  out: "./database/migrations",
+  out: "../db-ops/migrations/db-gateway",
   schema: "./src/**/*.schema.ts",
   dialect: "postgresql",
   casing: "snake_case",

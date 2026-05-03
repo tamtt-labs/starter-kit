@@ -1,0 +1,28 @@
+services:
+  ######################################################################
+  # Databases
+  ######################################################################
+  tamtt-postgres:
+    image: pgvector/pgvector:pg18
+    container_name: tamtt-postgres-container
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./_offline:/var/tmp
+      - tamtt_postgres_data:/var/lib/postgresql
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: postgres
+    networks:
+      - tamtt_network
+
+######################################################################
+# Docker networks & volumes
+######################################################################
+volumes:
+  tamtt_postgres_data:
+
+networks:
+  tamtt_network:
+    driver: bridge

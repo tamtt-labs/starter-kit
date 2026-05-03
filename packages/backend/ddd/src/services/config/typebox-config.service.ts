@@ -1,6 +1,5 @@
-import { Type, type TSchema } from "@sinclair/typebox";
-import { TypeCompiler } from "@sinclair/typebox/compiler";
-import { Value } from "@sinclair/typebox/value";
+import { type TSchema } from "@sinclair/typebox";
+import { TypeboxSchemaValidator } from "../schema-validator";
 import type { IConfigService } from "./config.service";
 
 type EnvProperties<TEnv extends Bun.Env> = Record<keyof TEnv, TSchema>;
@@ -21,26 +20,14 @@ export class TypeboxConfigService<TEnv extends Bun.Env> implements IConfigServic
   }
 
   private parseEnv(): TEnv {
-    const envSchema = Type.Object(this.properties);
-    const compiler = TypeCompiler.Compile(envSchema);
-
-    const parsedEnv = Value.Parse(
-      ["Clone", "Clean", "Default", "Decode", "Convert"],
-      envSchema,
-      this.sourceEnv ?? Bun.env,
-    );
-
-    const isValid = compiler.Check(parsedEnv);
-    if (isValid) {
-      return parsedEnv as unknown as TEnv;
+    const validator = new TypeboxSchemaValidator<TEnv>(this.properties);
+    const result = validator.safeValidate(this.sourceEnv ?? Bun.env);
+    switch (result.success) {
+      case true:
+        return result.data;
+      case false:
+        throw new Error(`Invalid environment variables:\n${result.error.message}`);
     }
-
-    const errors = [...compiler.Errors(parsedEnv)].reduce((errors, e) => {
-      const path = e.path.substring(1);
-      return { ...errors, [path]: e.message };
-    }, {});
-
-    throw new Error(`Invalid environment variables:\n${JSON.stringify(errors, null, 2)}`);
   }
 
   public isProduction() {

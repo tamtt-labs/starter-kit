@@ -1,3 +1,5 @@
+import { beforeAll, describe, expect, it, spyOn, type Mock } from "bun:test";
+
 import {
   DropAncientItemCommand,
   DropAncientItemHandler,
@@ -15,7 +17,7 @@ import { HERO_ID } from "@/__tests__/src/hero/repositories/hero.repository";
 import { ANCIENT_ITEM_ID } from "@/__tests__/src/hero/sagas/hero-game.saga";
 import { NoopHandler } from "@/__tests__/src/noop/noop.event-handler";
 import { waitImmediate } from "@/__tests__/utils/wait-immediate";
-import { beforeAll, describe, expect, it, spyOn, type Mock } from "bun:test";
+
 import { AppModule } from "./modules/app.module";
 
 describe("Basic flows", () => {

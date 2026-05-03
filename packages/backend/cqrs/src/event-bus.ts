@@ -1,7 +1,6 @@
 import { Subscription, defer, of } from "rxjs";
 import { catchError, filter, mergeMap } from "rxjs/operators";
-import { CommandBus } from "./command-bus";
-import { DefaultPubSub } from "./helpers/default-pubsub";
+
 import type {
   CqrsOptions,
   ICommand,
@@ -14,6 +13,9 @@ import type {
   Type,
   UnhandledExceptionInfo,
 } from "./interfaces";
+
+import { CommandBus } from "./command-bus";
+import { DefaultPubSub } from "./helpers/default-pubsub";
 import { UnhandledExceptionBus } from "./unhandled-exception-bus";
 import { ObservableBus } from "./utils";
 

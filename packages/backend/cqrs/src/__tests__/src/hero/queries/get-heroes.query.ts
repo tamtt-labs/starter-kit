@@ -1,4 +1,5 @@
 import type { IQueryHandler } from "@/interfaces";
+
 import type { HeroRepository } from "../repositories/hero.repository";
 
 export class GetHeroesQuery {}

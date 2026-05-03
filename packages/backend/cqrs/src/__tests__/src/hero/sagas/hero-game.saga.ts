@@ -1,6 +1,9 @@
-import type { ICommand, ISagaProvider } from "@/interfaces";
-import { ofType } from "@/operators";
 import { Observable, map } from "rxjs";
+
+import type { ICommand, ISagaProvider } from "@/interfaces";
+
+import { ofType } from "@/operators";
+
 import { DropAncientItemCommand } from "../commands/drop-accent-item.command";
 import { HeroKilledDragonEvent } from "../events/hero-killed-dragon/hero-killed-dragon.event";
 

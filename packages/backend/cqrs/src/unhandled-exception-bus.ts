@@ -1,5 +1,5 @@
 import { Observable, filter } from "rxjs";
-import { DefaultUnhandledExceptionPubSub } from "./helpers/default-unhandled-exception-pubsub";
+
 import type {
   CqrsOptions,
   ICommand,
@@ -8,6 +8,8 @@ import type {
   Type,
   UnhandledExceptionInfo,
 } from "./interfaces";
+
+import { DefaultUnhandledExceptionPubSub } from "./helpers/default-unhandled-exception-pubsub";
 import { ObservableBus } from "./utils/observable-bus";
 
 /**

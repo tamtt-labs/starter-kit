@@ -1,4 +1,5 @@
 import Elysia from "elysia";
+
 import { ConfigService } from "./config.service";
 
 export const configService = new ConfigService();

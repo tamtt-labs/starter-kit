@@ -1,7 +1,9 @@
-import { UnhandledExceptionCommand } from "@/__tests__/src/error/unhandled-exception.command";
-import { UnhandledExceptionEvent } from "@/__tests__/src/error/unhandled-exception.event";
 import { describe, expect, it } from "bun:test";
 import { take } from "rxjs";
+
+import { UnhandledExceptionCommand } from "@/__tests__/src/error/unhandled-exception.command";
+import { UnhandledExceptionEvent } from "@/__tests__/src/error/unhandled-exception.event";
+
 import { AppModule } from "./modules/app.module";
 
 describe("Unhandled exceptions", () => {

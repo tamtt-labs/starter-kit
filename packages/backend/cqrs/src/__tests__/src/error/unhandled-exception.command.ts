@@ -1,5 +1,6 @@
 import type { EventBus } from "@/event-bus";
 import type { ICommandHandler } from "@/interfaces";
+
 import { UnhandledExceptionEvent } from "./unhandled-exception.event";
 
 export class UnhandledExceptionCommand {

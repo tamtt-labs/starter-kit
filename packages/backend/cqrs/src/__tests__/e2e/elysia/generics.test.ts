@@ -1,6 +1,9 @@
-import { Command, Query } from "@/classes";
-import type { ICommandHandler } from "@/interfaces";
 import { describe, expect, it } from "bun:test";
+
+import type { ICommandHandler } from "@/interfaces";
+
+import { Command, Query } from "@/classes";
+
 import { AppModule } from "./modules/app.module";
 
 describe("Generics", () => {

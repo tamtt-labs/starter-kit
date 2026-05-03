@@ -1,6 +1,9 @@
-import type { ISagaProvider } from "@/interfaces";
-import { ofType } from "@/operators";
 import { Observable, mergeMap, of } from "rxjs";
+
+import type { ISagaProvider } from "@/interfaces";
+
+import { ofType } from "@/operators";
+
 import { UnhandledExceptionEvent } from "./unhandled-exception.event";
 
 export class ErrorsSagas implements ISagaProvider {

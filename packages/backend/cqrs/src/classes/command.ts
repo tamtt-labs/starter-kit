@@ -1,4 +1,5 @@
 import type { ICommand } from "../interfaces";
+
 import { RESULT_TYPE_SYMBOL } from "./constants";
 
 /**

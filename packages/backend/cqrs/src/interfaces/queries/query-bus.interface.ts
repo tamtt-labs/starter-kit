@@ -1,5 +1,6 @@
-import { Query } from "../../classes/query";
 import type { IQuery } from "./query.interface";
+
+import { Query } from "../../classes/query";
 
 /**
  * Represents a query bus.

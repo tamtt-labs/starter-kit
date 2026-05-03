@@ -1,6 +1,8 @@
 import { type TSchema } from "@sinclair/typebox";
-import { TypeboxSchemaValidator } from "../schema-validator";
+
 import type { IConfigService } from "./config.service";
+
+import { TypeboxSchemaValidator } from "../schema-validator";
 
 type EnvProperties<TEnv extends Bun.Env> = Record<keyof TEnv, TSchema>;
 type EnvRaw<TEnv extends Bun.Env> = Record<keyof TEnv, string | undefined>;

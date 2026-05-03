@@ -1,5 +1,6 @@
 import { drizzle } from "drizzle-orm/bun-sql";
 import Elysia from "elysia";
+
 import { assertElysia } from "../../utils/assert-elysia";
 
 type DrizzleOptions = {

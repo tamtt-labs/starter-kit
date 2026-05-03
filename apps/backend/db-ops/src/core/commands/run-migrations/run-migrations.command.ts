@@ -1,7 +1,8 @@
+import type { ICommandHandler } from "@tamtt-labs/cqrs";
+
 import type { DatabaseEnum } from "@/core/enums/database.enum";
 import type { ConfigService } from "@/core/services/config/config.service";
 import type { DatabaseService } from "@/core/services/database/database.service";
-import type { ICommandHandler } from "@tamtt-labs/cqrs";
 
 export class RunMigrationsCommand {
   constructor(public readonly databases: DatabaseEnum[]) {}

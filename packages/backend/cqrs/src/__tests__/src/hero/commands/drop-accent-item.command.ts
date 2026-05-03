@@ -1,5 +1,6 @@
 import type { EventPublisher } from "@/event-publisher";
 import type { ICommandHandler } from "@/interfaces";
+
 import type { HeroRepository } from "../repositories/hero.repository";
 
 export class DropAncientItemCommand {

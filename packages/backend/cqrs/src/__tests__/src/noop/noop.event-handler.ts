@@ -1,4 +1,5 @@
 import type { IEventHandler } from "@/interfaces";
+
 import { NoopEvent } from "./noop.event";
 
 export class NoopHandler implements IEventHandler<NoopEvent> {

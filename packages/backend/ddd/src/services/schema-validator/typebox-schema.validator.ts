@@ -5,6 +5,7 @@ import {
 } from "@sinclair/typebox";
 import { TypeCheck, TypeCompiler } from "@sinclair/typebox/compiler";
 import { Value } from "@sinclair/typebox/value";
+
 import { SchemaValidationError } from "./schema-validation.error";
 import { SchemaValidator } from "./schema.validator";
 

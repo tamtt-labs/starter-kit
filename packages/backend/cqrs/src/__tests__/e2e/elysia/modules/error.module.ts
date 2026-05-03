@@ -1,7 +1,9 @@
+import Elysia from "elysia";
+
 import { ErrorsSagas } from "@/__tests__/src/error/error.saga";
 import { UnhandledExceptionCommandHandler } from "@/__tests__/src/error/unhandled-exception.command";
 import { UnhandledExceptionEventHandler } from "@/__tests__/src/error/unhandled-exception.event-handler";
-import Elysia from "elysia";
+
 import { CqrsModule } from "./cqrs.module";
 
 const UnhandledExceptionCommandPlugin = new Elysia()

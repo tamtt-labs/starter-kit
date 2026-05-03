@@ -22,7 +22,7 @@ FROM gcr.io/distroless/base-debian12 AS runner
 WORKDIR /app
 
 # Copy only the compiled binary from the builder
-COPY --from=builder /app/apps/backend/api-gateway/dist/server ./server
+COPY --from=builder /app/apps/backend/api-gateway/dist/api-gateway ./api-gateway
 COPY --from=builder /app/apps/backend/api-gateway/dist/index.d.ts ./index.d.ts
 
 # Set environment variables
@@ -30,4 +30,4 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # Run the standalone binary directly
-CMD ["./server"]
+CMD ["./api-gateway"]

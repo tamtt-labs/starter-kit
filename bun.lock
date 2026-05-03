@@ -38,6 +38,22 @@
         "zod": "^4.4.2",
       },
     },
+    "apps/backend/db-ops": {
+      "name": "@tamtt-labs/db-ops",
+      "dependencies": {
+        "@sinclair/typebox": "^0.34.48",
+        "@tamtt-labs/cqrs": "workspace:*",
+        "@tamtt-labs/ddd": "workspace:*",
+        "commander": "^14.0.3",
+        "drizzle-orm": "^0.45.1",
+      },
+      "devDependencies": {
+        "@commander-js/extra-typings": "^14.0.0",
+        "@tamtt-labs/tsconfig": "workspace:*",
+        "@types/bun": "^1.3.11",
+        "drizzle-kit": "^0.31.9",
+      },
+    },
     "apps/frontend/web-app": {
       "name": "@tamtt-labs/web-app",
       "dependencies": {
@@ -253,6 +269,8 @@
     "@borewit/text-codec": ["@borewit/text-codec@0.2.2", "", {}, "sha512-DDaRehssg1aNrH4+2hnj1B7vnUGEjU6OIlyRdkMd0aUdIUvKXrJfXsy8LVtXAy7DRvYVluWbMspsRhz2lcW0mQ=="],
 
     "@bramus/specificity": ["@bramus/specificity@2.4.2", "", { "dependencies": { "css-tree": "^3.0.0" }, "bin": { "specificity": "bin/cli.js" } }, "sha512-ctxtJ/eA+t+6q2++vj5j7FYX3nRu311q1wfYH3xjlLOsczhlhxAg2FWNUXhpGvAw3BWo1xBcvOV6/YLc2r5FJw=="],
+
+    "@commander-js/extra-typings": ["@commander-js/extra-typings@14.0.0", "", { "peerDependencies": { "commander": "~14.0.0" } }, "sha512-hIn0ncNaJRLkZrxBIp5AsW/eXEHNKYQBh0aPdoUqNgD+Io3NIykQqpKFyKcuasZhicGaEZJX/JBSIkZ4e5x8Dg=="],
 
     "@csstools/color-helpers": ["@csstools/color-helpers@6.0.2", "", {}, "sha512-LMGQLS9EuADloEFkcTBR3BwV/CGHV7zyDxVRtVDTwdI2Ca4it0CCVTT9wCkxSgokjE5Ho41hEPgb8OEUwoXr6Q=="],
 
@@ -613,6 +631,8 @@
     "@tamtt-labs/api-gateway": ["@tamtt-labs/api-gateway@workspace:apps/backend/api-gateway"],
 
     "@tamtt-labs/cqrs": ["@tamtt-labs/cqrs@workspace:packages/backend/cqrs"],
+
+    "@tamtt-labs/db-ops": ["@tamtt-labs/db-ops@workspace:apps/backend/db-ops"],
 
     "@tamtt-labs/ddd": ["@tamtt-labs/ddd@workspace:packages/backend/ddd"],
 

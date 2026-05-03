@@ -1,10 +1,5 @@
 import type { AggregateRoot } from "@/aggregate-root";
-import { CommandBus } from "@/command-bus";
-import { EventBus } from "@/event-bus";
-import { EventPublisher } from "@/event-publisher";
-import { QueryBus } from "@/query-bus";
-import { UnhandledExceptionBus } from "@/unhandled-exception-bus";
-import { mergeContext } from "@/utils";
+import { Cqrs as CqrsCore, type CqrsRegistration } from "../cqrs";
 import { Elysia } from "elysia";
 import type {
   CqrsOptions,
@@ -15,93 +10,65 @@ import type {
   Type,
 } from "../interfaces";
 
-type CqrsRegistration = {
-  commands?: ICommandHandler[];
-  events?: IEventHandler[];
-  queries?: IQueryHandler[];
-  sagas?: ISagaProvider[];
-  aggregateRoots?: Type<AggregateRoot>[];
-};
-
 export class Cqrs {
   static createModule(options?: CqrsOptions & { name?: string }) {
-    const commandBus = new CommandBus(options);
-    const unhandledExceptionBus = new UnhandledExceptionBus(options);
-    const eventBus = new EventBus(commandBus, unhandledExceptionBus, options);
-    const eventPublisher = new EventPublisher(eventBus);
-    const queryBus = new QueryBus(options);
+    const cqrsCore = new CqrsCore(options);
 
     const cqrsModule = new Elysia({ name: options?.name ?? "CqrsModule" })
       .decorate({
-        commandBus,
-        eventBus,
-        eventPublisher,
-        queryBus,
-        unhandledExceptionBus,
+        commandBus: cqrsCore.commandBus,
+        eventBus: cqrsCore.eventBus,
+        eventPublisher: cqrsCore.eventPublisher,
+        queryBus: cqrsCore.queryBus,
+        unhandledExceptionBus: cqrsCore.unhandledExceptionBus,
       })
       .onStop((app) => app.decorator.eventBus.destroy());
 
-    const register = ({ commands, events, queries, sagas, aggregateRoots }: CqrsRegistration) => {
+    const register = (cqrsRegistration: CqrsRegistration) => {
       return <T>(app: T) => {
         assertElysia(app);
-        return app.use(cqrsModule).decorate((decorator) => {
-          decorator.commandBus.register(...(commands ?? []));
-          decorator.eventBus.register(...(events ?? []));
-          decorator.queryBus.register(...(queries ?? []));
-          decorator.eventBus.registerSagas(...(sagas ?? []));
-          mergeContext(decorator.eventBus, aggregateRoots);
-          return decorator;
-        });
+        cqrsCore.register(cqrsRegistration);
+        return app.use(cqrsModule);
       };
     };
 
     const registerCommands = (...commands: ICommandHandler[]) => {
       return <T>(app: T) => {
         assertElysia(app);
-        return app.use(cqrsModule).decorate((decorator) => {
-          decorator.commandBus.register(...(commands ?? []));
-          return decorator;
-        });
+        cqrsCore.registerCommands(...commands);
+        return app.use(cqrsModule);
       };
     };
 
     const registerEvents = (...events: IEventHandler[]) => {
       return <T>(app: T) => {
         assertElysia(app);
-        return app.use(cqrsModule).decorate((decorator) => {
-          decorator.eventBus.register(...(events ?? []));
-          return decorator;
-        });
+        cqrsCore.registerEvents(...events);
+        return app.use(cqrsModule);
       };
     };
 
     const registerQueries = (...queries: IQueryHandler[]) => {
       return <T>(app: T) => {
         assertElysia(app);
-        return app.use(cqrsModule).decorate((decorator) => {
-          decorator.queryBus.register(...(queries ?? []));
-          return decorator;
-        });
+        cqrsCore.registerQueries(...queries);
+        return app.use(cqrsModule);
       };
     };
 
     const registerSagas = (...sagas: ISagaProvider[]) => {
       return <T>(app: T) => {
         assertElysia(app);
-        return app.use(cqrsModule).decorate((decorator) => {
-          decorator.eventBus.registerSagas(...(sagas ?? []));
-          return decorator;
-        });
+        cqrsCore.registerSagas(...sagas);
+        return app.use(cqrsModule);
       };
     };
 
     const registerAggregateRoots = (...aggregateRoots: Type<AggregateRoot>[]) => {
       return <T>(app: T) => {
         assertElysia(app);
-        return app.use(cqrsModule).decorate((decorator) => {
-          mergeContext(decorator.eventBus, aggregateRoots);
-          return decorator;
-        });
+        cqrsCore.registerAggregateRoots(...aggregateRoots);
+        return app.use(cqrsModule);
       };
     };
 

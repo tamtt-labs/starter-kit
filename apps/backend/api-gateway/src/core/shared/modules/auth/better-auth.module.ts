@@ -5,6 +5,7 @@ import { betterAuth as betterAuthFactory } from "better-auth/minimal";
 import { anonymous, openAPI, organization } from "better-auth/plugins";
 import { emailOTP } from "better-auth/plugins/email-otp";
 import Elysia from "elysia";
+
 import { ConfigModule } from "../config/config.module";
 import { DrizzleWriteModule } from "../database/drizzle.module";
 import { authSchema } from "./schema";

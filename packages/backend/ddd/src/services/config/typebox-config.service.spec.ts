@@ -1,5 +1,6 @@
 import { Type } from "@sinclair/typebox";
 import { describe, expect, it } from "bun:test";
+
 import { TypeboxConfigService } from "./typebox-config.service";
 
 declare module "bun" {

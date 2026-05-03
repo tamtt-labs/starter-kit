@@ -1,4 +1,5 @@
 import type { IEventHandler } from "@/interfaces";
+
 import { HeroKilledDragonEvent } from "./hero-killed-dragon.event";
 
 export class HeroKilledDragonHandler implements IEventHandler<HeroKilledDragonEvent> {

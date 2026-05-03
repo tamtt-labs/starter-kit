@@ -1,4 +1,5 @@
 import type { IEventHandler } from "@/interfaces";
+
 import { UnhandledExceptionEvent } from "./unhandled-exception.event";
 
 export class UnhandledExceptionEventHandler implements IEventHandler<UnhandledExceptionEvent> {

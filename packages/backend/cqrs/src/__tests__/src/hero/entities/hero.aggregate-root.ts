@@ -1,4 +1,5 @@
 import { AggregateRoot } from "@/aggregate-root";
+
 import { HeroFoundItemEvent } from "../events/hero-found-item/hero-found-item.event";
 import { HeroKilledDragonEvent } from "../events/hero-killed-dragon/hero-killed-dragon.event";
 

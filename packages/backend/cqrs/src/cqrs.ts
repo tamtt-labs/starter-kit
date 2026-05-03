@@ -1,4 +1,6 @@
 import { CommandBus } from "@/command-bus";
+
+import type { AggregateRoot } from "./aggregate-root";
 import type {
   CqrsOptions,
   ICommandHandler,
@@ -7,11 +9,11 @@ import type {
   ISagaProvider,
   Type,
 } from "./interfaces";
-import { QueryBus } from "./query-bus";
-import { UnhandledExceptionBus } from "./unhandled-exception-bus";
+
 import { EventBus } from "./event-bus";
 import { EventPublisher } from "./event-publisher";
-import type { AggregateRoot } from "./aggregate-root";
+import { QueryBus } from "./query-bus";
+import { UnhandledExceptionBus } from "./unhandled-exception-bus";
 import { mergeContext } from "./utils";
 
 export type CqrsRegistration = {

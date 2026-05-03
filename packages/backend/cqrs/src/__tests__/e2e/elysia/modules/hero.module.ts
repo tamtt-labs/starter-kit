@@ -1,3 +1,5 @@
+import Elysia from "elysia";
+
 import { DropAncientItemHandler } from "@/__tests__/src/hero/commands/drop-accent-item.command";
 import { KillDragonHandler } from "@/__tests__/src/hero/commands/kill-dragon.command";
 import { Hero } from "@/__tests__/src/hero/entities/hero.aggregate-root";
@@ -5,7 +7,7 @@ import { HeroKilledDragonHandler } from "@/__tests__/src/hero/events/hero-killed
 import { GetHeroesHandler } from "@/__tests__/src/hero/queries/get-heroes.query";
 import { HeroRepository } from "@/__tests__/src/hero/repositories/hero.repository";
 import { HeroGameSagas } from "@/__tests__/src/hero/sagas/hero-game.saga";
-import Elysia from "elysia";
+
 import { CqrsModule } from "./cqrs.module";
 
 const HeroRepositoryPlugin = new Elysia().decorate("heroRepository", new HeroRepository());

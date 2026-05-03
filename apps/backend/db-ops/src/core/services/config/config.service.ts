@@ -1,5 +1,6 @@
-import { TypeboxConfigService } from "@tamtt-labs/ddd";
 import { Type as t } from "@sinclair/typebox";
+import { TypeboxConfigService } from "@tamtt-labs/ddd";
+
 import "./env.d.ts";
 import { DatabaseEnum } from "@/core/enums/database.enum.js";
 

@@ -1,6 +1,7 @@
-import { Query } from "../../classes";
 import type { Type } from "../type.interface";
 import type { IQuery } from "./query.interface";
+
+import { Query } from "../../classes";
 
 /**
  * Represents a query handler.

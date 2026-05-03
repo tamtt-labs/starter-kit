@@ -3,6 +3,7 @@
 import { UniqueEntityId } from "@tamtt-labs/ddd";
 import { relations } from "drizzle-orm";
 import { index, pgTable, text, timestamp, unique } from "drizzle-orm/pg-core";
+
 import { user } from "./user.schema";
 
 /**

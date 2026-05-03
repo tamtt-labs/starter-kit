@@ -1,6 +1,3 @@
-import { Command } from "./classes";
-import { CommandHandlerNotFoundException } from "./exceptions/command-not-found.exception";
-import { DefaultCommandPubSub } from "./helpers/default-command-pubsub";
 import type {
   CqrsOptions,
   ICommand,
@@ -9,6 +6,10 @@ import type {
   ICommandPublisher,
   Type,
 } from "./interfaces";
+
+import { Command } from "./classes";
+import { CommandHandlerNotFoundException } from "./exceptions/command-not-found.exception";
+import { DefaultCommandPubSub } from "./helpers/default-command-pubsub";
 import { ObservableBus } from "./utils/observable-bus";
 
 export type CommandProvider<CommandBase extends ICommand = ICommand> = {

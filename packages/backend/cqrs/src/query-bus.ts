@@ -1,8 +1,9 @@
+import type { IQuery, IQueryBus, IQueryHandler, IQueryPublisher, Type } from "./interfaces";
+import type { CqrsOptions } from "./interfaces/cqrs-options.interface";
+
 import { Query } from "./classes/query";
 import { QueryHandlerNotFoundException } from "./exceptions";
 import { DefaultQueryPubSub } from "./helpers/default-query-pubsub";
-import type { IQuery, IQueryBus, IQueryHandler, IQueryPublisher, Type } from "./interfaces";
-import type { CqrsOptions } from "./interfaces/cqrs-options.interface";
 import { ObservableBus } from "./utils/observable-bus";
 
 export type QueryProvider<QueryBase extends IQuery = IQuery> = {

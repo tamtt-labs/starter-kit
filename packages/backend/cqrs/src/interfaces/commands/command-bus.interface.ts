@@ -1,5 +1,6 @@
-import { Command } from "../../classes";
 import type { ICommand } from "./command.interface";
+
+import { Command } from "../../classes";
 
 /**
  * Represents a command bus.

@@ -1,6 +1,7 @@
-import { Command } from "../../classes";
 import type { Type } from "../type.interface";
 import type { ICommand } from "./command.interface";
+
+import { Command } from "../../classes";
 
 /**
  * Represents a command handler.

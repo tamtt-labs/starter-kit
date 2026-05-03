@@ -1,6 +1,7 @@
-import type { AggregateRoot } from "@/aggregate-root";
-import { Cqrs as CqrsCore, type CqrsRegistration } from "../cqrs";
 import { Elysia } from "elysia";
+
+import type { AggregateRoot } from "@/aggregate-root";
+
 import type {
   CqrsOptions,
   ICommandHandler,
@@ -9,6 +10,8 @@ import type {
   ISagaProvider,
   Type,
 } from "../interfaces";
+
+import { Cqrs as CqrsCore, type CqrsRegistration } from "../cqrs";
 
 export class Cqrs {
   static createModule(options?: CqrsOptions & { name?: string }) {

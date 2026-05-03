@@ -1,4 +1,5 @@
 import { Subject } from "rxjs";
+
 import type { IEvent } from "./event.interface";
 
 export interface IMessageSource<EventBase extends IEvent = IEvent> {

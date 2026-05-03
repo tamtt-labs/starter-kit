@@ -1,4 +1,5 @@
 import Elysia from "elysia";
+
 import { CqrsModule } from "./cqrs.module";
 import { ErrorModule } from "./error.module";
 import { HeroModule } from "./hero.module";

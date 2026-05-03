@@ -1,6 +1,7 @@
 import type { AggregateRoot } from "../aggregate-root";
-import { EventBus } from "../event-bus";
 import type { IEvent, Type } from "../interfaces";
+
+import { EventBus } from "../event-bus";
 
 export const mergeContext = (eventBus: EventBus, aggregateRoots: Type<AggregateRoot>[] = []) => {
   for (const item of aggregateRoots) {

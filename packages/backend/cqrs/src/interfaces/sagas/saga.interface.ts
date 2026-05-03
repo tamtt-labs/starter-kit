@@ -1,4 +1,5 @@
 import { Observable } from "rxjs";
+
 import type { ICommand } from "../commands/command.interface";
 import type { IEvent } from "../events/event.interface";
 

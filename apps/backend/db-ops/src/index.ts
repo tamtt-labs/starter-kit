@@ -1,10 +1,12 @@
 import { Cqrs, ICommandHandler } from "@tamtt-labs/cqrs";
-import { SqlDatabaseService } from "./core/services/database/sql-database.service";
-import { ConfigService } from "./core/services/config/config.service";
-import { RunMigrationsCommandHandler } from "./core/commands/run-migrations/run-migrations.command";
 import { Command as Cli } from "commander";
+
 import type { ICommandLine } from "./core/interfaces/command-line.interface";
+
 import { RunMigrationsCli } from "./core/commands/run-migrations/run-migrations.cli";
+import { RunMigrationsCommandHandler } from "./core/commands/run-migrations/run-migrations.command";
+import { ConfigService } from "./core/services/config/config.service";
+import { SqlDatabaseService } from "./core/services/database/sql-database.service";
 
 const cli = new Cli().name("db-ops").description("Database operations CLI");
 const cqrs = new Cqrs();

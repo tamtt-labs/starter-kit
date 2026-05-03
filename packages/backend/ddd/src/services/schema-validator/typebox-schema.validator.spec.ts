@@ -1,5 +1,6 @@
 import { Type } from "@sinclair/typebox";
 import { describe, expect, it } from "bun:test";
+
 import { SchemaValidationError } from "./schema-validation.error";
 import { TypeboxSchemaValidator } from "./typebox-schema.validator";
 

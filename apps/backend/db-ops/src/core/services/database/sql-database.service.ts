@@ -1,7 +1,7 @@
-import { DatabaseService } from "./database.service";
-
 import { drizzle } from "drizzle-orm/bun-sql";
 import { migrate } from "drizzle-orm/bun-sql/migrator";
+
+import { DatabaseService } from "./database.service";
 
 export class SqlDatabaseService implements DatabaseService {
   private databaseMap: Map<string, ReturnType<typeof drizzle>> = new Map();

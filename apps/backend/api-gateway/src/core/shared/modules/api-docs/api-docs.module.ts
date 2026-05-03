@@ -1,5 +1,6 @@
 import { fromTypes, openapi } from "@elysiajs/openapi";
 import Elysia from "elysia";
+
 import { BetterAuthModule } from "../auth/better-auth.module";
 import { configService } from "../config/config.module";
 

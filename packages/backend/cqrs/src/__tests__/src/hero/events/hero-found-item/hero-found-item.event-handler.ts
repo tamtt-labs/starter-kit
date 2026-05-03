@@ -1,4 +1,5 @@
 import type { IEventHandler } from "@/interfaces";
+
 import { HeroFoundItemEvent } from "./hero-found-item.event";
 
 export class HeroFoundItemHandler implements IEventHandler<HeroFoundItemEvent> {

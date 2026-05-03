@@ -1,9 +1,12 @@
-import { DatabaseEnum } from "@/core/enums/database.enum";
-import { ICommandLine } from "@/core/interfaces/command-line.interface";
-import { Type } from "@sinclair/typebox";
 import type { CommandBus } from "@tamtt-labs/cqrs";
+
+import { Type } from "@sinclair/typebox";
 import { TypeboxSchemaValidator } from "@tamtt-labs/ddd";
 import { Command as Cli } from "commander";
+
+import { DatabaseEnum } from "@/core/enums/database.enum";
+import { ICommandLine } from "@/core/interfaces/command-line.interface";
+
 import { RunMigrationsCommand } from "./run-migrations.command";
 
 interface CliArgs {

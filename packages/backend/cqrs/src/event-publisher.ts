@@ -1,6 +1,7 @@
+import type { IEvent } from "./interfaces";
+
 import { AggregateRoot } from "./aggregate-root";
 import { EventBus } from "./event-bus";
-import type { IEvent } from "./interfaces";
 
 interface Constructor<T> {
   new (...args: any[]): T;

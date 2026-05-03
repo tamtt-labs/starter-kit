@@ -9,6 +9,9 @@ import { ConfigModule } from "../config/config.module";
 import { DrizzleWriteModule } from "../database/drizzle.module";
 import { authSchema } from "./schema";
 
+export type * as SimpleWebAuthn from "@simplewebauthn/server";
+export type * as Zod from "zod/v4";
+
 export const BetterAuthModule = new Elysia({ name: "BetterAuthModule" })
   .use(ConfigModule)
   .use(DrizzleWriteModule.register("authRepository", authSchema))

@@ -39,12 +39,14 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,mjs,cjs,json,md}": [
-      "bun format:fix",
+      "bun format:fix"
+    ],
+    "*.{ts,tsx,js,jsx,mjs,cjs}": [
       "bun lint:fix"
     ]
   },
   "engines": {
-    "bun": "1.3.11"
+    "bun": "1.4.0"
   },
-  "packageManager": "bun@1.3.11"
+  "packageManager": "bun@1.4.0"
 }

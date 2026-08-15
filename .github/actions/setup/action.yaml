@@ -4,7 +4,7 @@ description: "Sets up Bun, restores node_modules and Turbo cache"
 inputs:
   bun-version:
     description: "Version of Bun to use"
-    default: "1.4.0"
+    default: "canary"
 
 outputs:
   cache-hit:

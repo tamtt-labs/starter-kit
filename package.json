@@ -24,7 +24,7 @@
     "@rolldown/plugin-babel": "^0.2.3",
     "husky": "^9.1.7",
     "lint-staged": "^17.3.0",
-    "oxfmt": "^0.64.0",
+    "oxfmt": "^0.66.0",
     "oxlint": "^1.76.0",
     "turbo": "^2.10.8",
     "typescript": "^7.0.2"
